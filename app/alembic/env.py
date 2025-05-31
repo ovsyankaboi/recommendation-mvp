@@ -10,7 +10,6 @@ load_dotenv()
 import models
 target_metadata = models.Base.metadata
 config = context.config
-# Если хотите брать URL из .env:
 config.set_main_option('sqlalchemy.url', os.getenv('DATABASE_URL', config.get_main_option('sqlalchemy.url')))
 fileConfig(config.config_file_name)
 
