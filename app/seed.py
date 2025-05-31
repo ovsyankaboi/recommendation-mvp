@@ -9,8 +9,6 @@ from app.crud import create_purchase
 def seed_movielens_ratings(path: str):
     db: Session = SessionLocal()
     count = 0
-
-    # --- создаём всех пользователей из MovieLens ---
     user_file = os.path.join(os.path.dirname(path), 'u.user')
     if os.path.exists(user_file):
         created = 0
@@ -31,7 +29,6 @@ def seed_movielens_ratings(path: str):
         print(f"Seeded {created} users into Users table.")
     else:
         print(f"User file not found at {user_file}")
-    # ----------------------------------------------
 
     with open(path, encoding='latin-1') as f:
         for line in f:
