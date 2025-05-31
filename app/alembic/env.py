@@ -4,18 +4,11 @@ from logging.config import fileConfig
 from sqlalchemy import engine_from_config, pool
 from alembic import context
 
-# Добавляем корневую папку app/ в путь для импорта моделей
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..', 'app')))
-
-# (Опционально) загрузка .env
 from dotenv import load_dotenv
 load_dotenv()
-
-# Импортируем metadata вашей модели
 import models
 target_metadata = models.Base.metadata
-
-# Подгружаем конфиг
 config = context.config
 # Если хотите брать URL из .env:
 config.set_main_option('sqlalchemy.url', os.getenv('DATABASE_URL', config.get_main_option('sqlalchemy.url')))
@@ -24,24 +17,16 @@ fileConfig(config.config_file_name)
 from sqlalchemy import engine_from_config, pool
 from alembic import context
 
-# 👇 добавлено
 from dotenv import load_dotenv
 import os
 load_dotenv()
 
-from app import models  # 👈 добавлено подключение твоих моделей
-
-# Получаем настройки Alembic
+from app import models
 config = context.config
-
-# Настройка логгера
 if config.config_file_name is not None:
     fileConfig(config.config_file_name)
 
-# 👇 Здесь указываем метаданные твоих моделей
 target_metadata = models.Base.metadata
-
-# URL подключения к базе данных из переменных окружения
 DATABASE_URL = os.getenv('DATABASE_URL')
 
 def run_migrations_offline() -> None:
